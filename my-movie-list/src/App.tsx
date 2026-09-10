@@ -19,6 +19,10 @@ function App() {
     setWatched(temp);
   };
 
+  const clearAllWatched = () => {
+    setWatched([]);
+  };
+
   const filteredMovies = movies.filter((movie) => {
     if (filter === "watched") {
       return watched.includes(movie.id);
@@ -51,18 +55,27 @@ function App() {
         Nieobejrzane
       </button>
 
-      {filteredMovies.map((item) => {
-        return (
-          <MovieCard
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            year={item.year}
-            genre={item.genre}
-            addToWatched={addToWatched}
-            watchedList={watched}/>
-        );
-      })}
+      <button onClick={clearAllWatched}>
+        Wyczyść wszystkie
+      </button>
+
+      {filteredMovies.length === 0 ? (
+        <p>Lista jest pusta.</p>
+      ) : (
+        filteredMovies.map((item) => {
+          return (
+            <MovieCard
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              year={item.year}
+              genre={item.genre}
+              addToWatched={addToWatched}
+              watchedList={watched}
+            />
+          );
+        })
+      )}
     </div>
   );
 }
