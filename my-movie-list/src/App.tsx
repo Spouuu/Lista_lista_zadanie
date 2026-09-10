@@ -3,48 +3,83 @@ import "./App.css";
 import movies from "./data/movies.json";
 import { MovieCard } from "./components/MovieCard";
 
-type dict = {
-  [key: number]:number
-}
+type Movie = {
+  id: number;
+  title: string;
+  year: number;
+  genre: string;
+};
+
+type Dict = {
+  [key: number]: number;
+};
 
 function App() {
-  const [watched, setWatched] = useState<number[]>([]);
-  const [filter, setFilter] = useState<"all" | "watched" | "unwatched">("all");
-  
+  const [movielist, setMovielist] = useState<Movie[]>(movies);
 
-  const [listaocen, setListaocen] = useState<dict>(() => {
-  return movies.reduce((temp: dict, item) => {
-    temp[item.id] = 0;
-    return temp;
-  }, {});
+  const [watched, setWatched] = useState<number[]>([]);
+
+  const [filter, setFilter] = useState<
+    "all" | "watched" | "unwatched"
+  >("all");
+
+  const [listaocen, setListaocen] = useState<Dict>(() => {
+    return movies.reduce((temp: Dict, item) => {
+      temp[item.id] = 0;
+      return temp;
+    }, {});
   });
+
+  const [title, setTitle] = useState("");
+  const [year, setYear] = useState("");
+  const [genre, setGenre] = useState("");
 
   const setRating = (id: number, rating: number) => {
-  setListaocen({
-    ...listaocen,
-    [id]: rating,
-  });
+    setListaocen((prev) => ({
+      ...prev,
+      [id]: rating,
+    }));
   };
 
-
-
   const addToWatched = (id: number) => {
-    let temp: number[] = [];
-
     if (watched.includes(id)) {
-      temp = watched.filter((num) => num !== id);
+      setWatched(watched.filter((num) => num !== id));
     } else {
-      temp = [...watched, id];
+      setWatched([...watched, id]);
     }
-
-    setWatched(temp);
   };
 
   const clearAllWatched = () => {
     setWatched([]);
   };
 
-  const filteredMovies = movies.filter((movie) => {
+  const addMovie = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!title || !year || !genre) {
+      return;
+    }
+
+    const newMovie: Movie = {
+      id: Date.now(),
+      title: title,
+      year: Number(year),
+      genre: genre,
+    };
+
+    setMovielist((prev) => [...prev, newMovie]);
+
+    setListaocen((prev) => ({
+      ...prev,
+      [newMovie.id]: 0,
+    }));
+
+    setTitle("");
+    setYear("");
+    setGenre("");
+  };
+
+  const filteredMovies = movielist.filter((movie) => {
     if (filter === "watched") {
       return watched.includes(movie.id);
     }
@@ -60,8 +95,45 @@ function App() {
     <div>
       <mark>Hey, it's me, it's Verity</mark>
 
+      <form onSubmit={addMovie}>
+        <label>
+          Tytuł:
+          <input
+            type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </label>
+
+        <br />
+
+        <label>
+          Rok:
+          <input
+            type="number"
+            value={year}
+            onChange={(event) => setYear(event.target.value)}
+          />
+        </label>
+
+        <br />
+
+        <label>
+          Gatunek:
+          <input
+            type="text"
+            value={genre}
+            onChange={(event) => setGenre(event.target.value)}
+          />
+        </label>
+
+        <br />
+
+        <button type="submit">Dodaj film</button>
+      </form>
+
       <h1>
-        {watched.length}/{movies.length}
+        {watched.length}/{movielist.length}
       </h1>
 
       <button onClick={() => setFilter("all")}>
@@ -83,22 +155,19 @@ function App() {
       {filteredMovies.length === 0 ? (
         <p>Lista jest pusta.</p>
       ) : (
-        filteredMovies.map((item) => {
-          return (
-            <MovieCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              year={item.year}
-              genre={item.genre}
-              addToWatched={addToWatched}
-              watchedList={watched}
-              listaOcen={listaocen}
-              setRating={setRating}
-            />
-
-          );
-        })
+        filteredMovies.map((item) => (
+          <MovieCard
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            year={item.year}
+            genre={item.genre}
+            addToWatched={addToWatched}
+            watchedList={watched}
+            listaOcen={listaocen}
+            setRating={setRating}
+          />
+        ))
       )}
     </div>
   );

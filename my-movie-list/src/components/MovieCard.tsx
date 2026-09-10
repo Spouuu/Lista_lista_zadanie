@@ -17,8 +17,8 @@ export const MovieCard = (props: MovieProps) => {
   const currentRating = props.listaOcen[props.id] ?? 0;
 
   return (
-    <div>
-      <h1>{props.title}</h1>
+    <div className="movie-card">
+      <h2>{props.title}</h2>
       <h3>{props.year}</h3>
       <h4>{props.genre}</h4>
 
