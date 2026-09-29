@@ -42,14 +42,12 @@ body::after {
   z-index: -1;
 }
 
-/* Główny kontener */
 #root > div {
   width: min(1100px, 92%);
   margin: 0 auto;
   padding: 50px 0;
 }
 
-/* Napis na górze */
 mark {
   display: inline-block;
   padding: 10px 18px;
@@ -62,7 +60,6 @@ mark {
   transform: rotate(-2deg);
 }
 
-/* Licznik */
 h1 {
   margin: 25px 0;
   font-size: 52px;
@@ -71,7 +68,6 @@ h1 {
   letter-spacing: -2px;
 }
 
-/* Przyciski */
 button {
   border: none;
   padding: 11px 20px;
@@ -97,9 +93,6 @@ button:hover {
 button:active {
   transform: scale(0.96);
 }
-
-/* Możesz wykorzystać te style, jeśli MovieCard renderuje
-   elementy z takimi klasami */
 
 .movie-card {
   background: rgba(255, 255, 255, 0.85);
@@ -137,7 +130,6 @@ button:active {
   background: #e96ba8;
 }
 
-/* Responsywność */
 @media (max-width: 600px) {
   #root > div {
     padding: 30px 0;
@@ -156,7 +148,6 @@ button:active {
   }
 }
 
-/* Formularz dodawania filmu */
 form {
   width: min(600px, 100%);
   margin: 30px 0;
@@ -168,7 +159,6 @@ form {
   backdrop-filter: blur(8px);
 }
 
-/* Etykiety */
 form label {
   display: block;
   margin-bottom: 16px;
@@ -177,7 +167,6 @@ form label {
   font-size: 15px;
 }
 
-/* Pola tekstowe */
 form input {
   display: block;
   width: 100%;
@@ -193,13 +182,11 @@ form input {
   transition: all 0.2s ease;
 }
 
-/* Efekt kliknięcia w pole */
 form input:focus {
   border-color: #ff8fc4;
   box-shadow: 0 0 0 4px rgba(255, 143, 196, 0.15);
 }
 
-/* Przycisk formularza */
 form button {
   margin: 5px 0 0;
   padding: 12px 24px;
@@ -213,7 +200,6 @@ form button:hover {
   transform: translateY(-2px);
 }
 
-/* Formularz na telefonie */
 @media (max-width: 600px) {
   form {
     padding: 18px;

@@ -6,7 +6,7 @@ export interface MovieProps {
   id: number;
   title: string;
   year: number;
-  genre: string;
+  genre: string[];
   addToWatched: (id: number) => void;
   watchedList: number[];
   listaOcen: Dict;
@@ -20,7 +20,7 @@ export const MovieCard = (props: MovieProps) => {
     <div className="movie-card">
       <h2>{props.title}</h2>
       <h3>{props.year}</h3>
-      <h4>{props.genre}</h4>
+      <h4>{props.genre.join(", ")}</h4>
 
       <button
         onClick={() => {

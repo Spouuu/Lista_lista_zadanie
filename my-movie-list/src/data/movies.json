@@ -3,24 +3,24 @@
         "id": 1,
         "title": "Interstellar",
         "year": 2014,
-        "genre": "Sci-Fi"
+        "genre": ["historyczny", "dramat", "akcja"]
     },
     {
         "id": 2,
         "title": "Inception",
         "year": 2010,
-        "genre": "Sci-Fi"
+        "genre": ["biograficzny", "historyczny", "dramat"]
     },
     {
         "id": 3,
         "title": "Inter",
         "year": 2024,
-        "genre": "X"
+        "genre": ["biograficzny", "historyczny", "dramat"]
     },
     {
         "id": 4,
         "title": "stellar",
         "year": 2016,
-        "genre": "X"
+        "genre": ["biograficzny", "historyczny", "dramat"]
     }
 ]

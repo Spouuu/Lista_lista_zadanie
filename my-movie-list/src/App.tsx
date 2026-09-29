@@ -7,7 +7,7 @@ type Movie = {
   id: number;
   title: string;
   year: number;
-  genre: string;
+  genre: string[];
 };
 
 type Dict = {
@@ -32,7 +32,21 @@ function App() {
 
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
-  const [genre, setGenre] = useState("");
+  const [genre, setGenre] = useState<string[]>([""]);
+
+  const handleGenreChange = (index: number, value: string) => {
+    setGenre((prev) => {
+        const newGenres = [...prev];
+        newGenres[index] = value;
+        return newGenres;
+      });
+  };
+
+  const addGenreField = () => {
+    setGenre((prev) => [...prev, ""]);
+  };
+
+
 
   const setRating = (id: number, rating: number) => {
     setListaocen((prev) => ({
@@ -54,18 +68,18 @@ function App() {
   };
 
   const addMovie = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    if (!title || !year || !genre) {
-      return;
-    }
+  if (!title || !year || genre.every((item) => !item.trim())) {
+    return;
+  }
 
-    const newMovie: Movie = {
-      id: Date.now(),
-      title: title,
-      year: Number(year),
-      genre: genre,
-    };
+  const newMovie: Movie = {
+    id: Date.now(),
+    title: title,
+    year: Number(year),
+    genre: genre.filter((item) => item.trim() !== ""),
+  };
 
     setMovielist((prev) => [...prev, newMovie]);
 
@@ -76,7 +90,7 @@ function App() {
 
     setTitle("");
     setYear("");
-    setGenre("");
+    setGenre([""]);
   };
 
   const filteredMovies = movielist.filter((movie) => {
@@ -118,14 +132,26 @@ function App() {
 
         <br />
 
-        <label>
-          Gatunek:
-          <input
-            type="text"
-            value={genre}
-            onChange={(event) => setGenre(event.target.value)}
-          />
-        </label>
+        <label>Gatunki:</label>
+
+        {genre.map((item, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              value={item}
+              onChange={(event) =>
+                handleGenreChange(index, event.target.value)
+              }
+            />
+
+            {index === genre.length - 1 && (
+              <button type="button" onClick={addGenreField}>
+                +
+              </button>
+            )}
+          </div>
+        ))}
+
 
         <br />
 
